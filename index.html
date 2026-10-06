@@ -1,0 +1,280 @@
+<title>Wire Room</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@400;600&family=IBM+Plex+Sans:wght@400;500&display=swap">
+
+<style>
+/* Layout: one column, board-led. The page is a departure hall at night, so it
+   commits to a single dark world rather than carrying a light theme it would
+   have to fake. Every colour is set explicitly for that reason. */
+:root{
+  --ground:#0E0D10; --panel:#17161B; --rule:#272530;
+  --ink:#ECEAE6; --dim:#8F8A83; --amber:#FFB028;
+  --flap:#1A191E; --flap-lip:#2A2831;
+  --s-routine:#4AE08C; --s-moderate:#50D6FF; --s-significant:#FFD64A;
+  --s-global:#FF942E; --s-critical:#FF4448; --s-existential:#FF5CDC;
+  --display:"Archivo Narrow","Arial Narrow",system-ui,sans-serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--ground);color:var(--ink);font-family:var(--body);
+  font-size:16px;line-height:1.6;margin:0}
+.wrap{max-width:860px;margin:0 auto;padding-inline:20px;padding-block:0}
+h1,h2,h3{font-family:var(--display);font-weight:600;text-wrap:balance;margin:0;
+  letter-spacing:.01em}
+h1{font-size:clamp(2.6rem,7vw,4.4rem);line-height:1.02}
+h2{font-size:clamp(1.5rem,3.6vw,2.1rem);line-height:1.1;margin-bottom:.6rem}
+h3{font-size:1.1rem;margin-bottom:.3rem}
+p{margin:0 0 1rem;max-width:62ch}
+.lede{font-size:1.15rem;color:var(--dim)}
+.eyebrow{font-family:var(--body);font-size:.72rem;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--amber);margin-bottom:.9rem}
+section{padding-block:clamp(2.6rem,7vw,4.4rem);border-top:1px solid var(--rule)}
+a{color:var(--ink)}
+
+/* --- the board ------------------------------------------------------- */
+.board-shell{background:var(--ground);padding-block:clamp(2rem,6vw,3.4rem) 0}
+.board{display:flex;gap:2px;justify-content:center;padding:10px;
+  background:linear-gradient(#232128,#141318);border-radius:7px;
+  box-shadow:0 18px 50px rgba(0,0,0,.6),inset 0 1px 0 #35323d;
+  overflow:hidden}
+.cell{flex:0 0 auto;width:clamp(13px,2.5vw,30px);height:clamp(22px,4.2vw,50px);
+  background:linear-gradient(var(--flap) 0 49%,#0C0B0F 49% 51%,var(--flap) 51% 100%);
+  border-radius:2px;position:relative;
+  font-family:var(--display);font-weight:400;color:#F6F4F0;
+  font-size:clamp(12px,2.2vw,27px);line-height:clamp(22px,4.2vw,50px);
+  text-align:center;overflow:hidden}
+.cell::after{content:"";position:absolute;inset:0;border-radius:2px;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.045);pointer-events:none}
+
+.cta{display:inline-block;background:var(--amber);color:#17120A;
+  font-weight:500;text-decoration:none;padding:.72rem 1.5rem;border-radius:4px;
+  font-size:1rem}
+.cta:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+.meta{color:var(--dim);font-size:.9rem;margin-top:.8rem}
+
+/* --- the drum -------------------------------------------------------- */
+.drum{font-family:var(--display);font-size:clamp(.85rem,2.2vw,1.15rem);
+  letter-spacing:.22em;background:var(--panel);border:1px solid var(--rule);
+  border-radius:5px;padding:.9rem 1rem;overflow-x:auto;white-space:nowrap;
+  color:var(--dim)}
+.figures{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:1.4rem;margin-top:1.6rem}
+.figure .n{font-family:var(--display);font-size:1.9rem;color:var(--ink);
+  font-variant-numeric:tabular-nums}
+.figure .l{color:var(--dim);font-size:.88rem}
+
+/* --- severity -------------------------------------------------------- */
+.scale{display:grid;gap:.5rem;margin-top:1.4rem}
+.band{display:grid;grid-template-columns:52px 1fr auto;gap:.9rem;align-items:center;
+  min-width:0}
+.band .swatch{height:12px;border-radius:2px}
+.band .name{font-family:var(--display);font-size:1.05rem;min-width:0}
+.band .rng{color:var(--dim);font-size:.85rem;font-variant-numeric:tabular-nums}
+
+figure{margin:0 0 1.6rem}
+figure img{display:block;width:100%;max-width:100%;border-radius:5px;
+  border:1px solid var(--rule)}
+figcaption{color:var(--dim);font-size:.86rem;margin-top:.5rem}
+
+.note{background:var(--panel);border-left:3px solid var(--amber);
+  border-radius:0 5px 5px 0;padding:1.1rem 1.2rem}
+.note p:last-child{margin-bottom:0}
+footer{border-top:1px solid var(--rule);padding-block:2.4rem;color:var(--dim);
+  font-size:.88rem}
+footer a{color:var(--dim)}
+@media (prefers-reduced-motion:reduce){.cell{transition:none}}
+</style>
+
+<div class="board-shell">
+  <div class="wrap"><div class="board" id="board" aria-label="A split-flap board"></div></div>
+</div>
+
+<div class="wrap">
+  <section style="border-top:none">
+    <h1>A departure board<br>for the news.</h1>
+    <p class="lede">A thin strip along the top of your screen. Every headline scored
+      1&ndash;10 for how much it actually matters, so you can set a floor and let the
+      rest go past. On a quiet day the board is quiet.</p>
+    <p><a class="cta" href="https://apps.microsoft.com/detail/9p5p0f4mwt2f">Get it free on the Microsoft Store</a></p>
+    <p class="meta">Windows 10 and 11 &middot; 40&nbsp;MB &middot; no account, no telemetry</p>
+  </section>
+
+  <section>
+    <div class="eyebrow">The mechanism</div>
+    <h2>The drum only turns forwards.</h2>
+    <p>Every character sits on a drum carrying forty-nine positions, in this order:</p>
+    <div class="drum">&nbsp;A B C D E F G H I J K L M N O P Q R S T U V W X Y Z 0 1 2 3 4 5 6 7 8 9 . , : - ' ! ? / ( ) &amp; % +</div>
+    <p style="margin-top:1.2rem">Reaching a letter means stepping through every letter
+      between. Going from <strong>W</strong> to <strong>R</strong> takes forty-four
+      steps, not two backwards &mdash; which is why a board full of text takes about
+      three and a half seconds to settle, and why the change crosses it as a wave.</p>
+    <p>Module proportions, cap height and flap timing were measured off photographs of
+      real boards rather than estimated. Measuring the result back against those
+      references caught a seven per cent overshoot on the lettering and a grain effect
+      nearly three times too strong, both of which had looked right.</p>
+    <div class="figures">
+      <div class="figure"><div class="n">55&thinsp;ms</div><div class="l">one flap turning over</div></div>
+      <div class="figure"><div class="n">18&thinsp;ms</div><div class="l">delay added per cell</div></div>
+      <div class="figure"><div class="n">49</div><div class="l">positions on the drum</div></div>
+      <div class="figure"><div class="n">34&thinsp;px</div><div class="l">screen it occupies</div></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow">Severity</div>
+    <h2>Scored, then filtered.</h2>
+    <p>A central bank holding rates and a missile test are not the same event. Each
+      headline is scored against named trigger phrases &mdash; a local model, not a
+      language model, so every score can be explained &mdash; and you set the floor
+      beneath which nothing reaches the board.</p>
+    <div class="scale">
+      <div class="band"><div class="swatch" style="background:var(--s-existential)"></div><div class="name">Existential</div><div class="rng">9.2 &ndash; 10</div></div>
+      <div class="band"><div class="swatch" style="background:var(--s-critical)"></div><div class="name">Critical</div><div class="rng">8.0 &ndash; 9.1</div></div>
+      <div class="band"><div class="swatch" style="background:var(--s-global)"></div><div class="name">Global</div><div class="rng">6.5 &ndash; 7.9</div></div>
+      <div class="band"><div class="swatch" style="background:var(--s-significant)"></div><div class="name">Significant</div><div class="rng">5.0 &ndash; 6.4</div></div>
+      <div class="band"><div class="swatch" style="background:var(--s-moderate)"></div><div class="name">Moderate</div><div class="rng">3.0 &ndash; 4.9</div></div>
+      <div class="band"><div class="swatch" style="background:var(--s-routine)"></div><div class="name">Routine</div><div class="rng">below 3.0</div></div>
+    </div>
+    <p style="margin-top:1.4rem">On the LED board those bands are the colours
+      themselves, so escalation reads across a room without the number needing to be
+      legible.</p>
+  </section>
+
+  <section>
+    <div class="eyebrow">Two boards</div>
+    <h2>Split-flap, or LED matrix.</h2>
+    <figure>
+      <img src="img/01-hero.png" alt="The split-flap board and the LED board, side by side">
+      <figcaption>Both boards, with a scored headline on each.</figcaption>
+    </figure>
+    <figure>
+      <img src="img/03-in-place.png" alt="The board as a thin strip along the top of a desktop">
+      <figcaption>Thirty-four pixels tall by default. Hover to hold a story, click to open it.</figcaption>
+    </figure>
+    <figure>
+      <img src="img/06-themes.png" alt="Six colour schemes for the LED board">
+      <figcaption>Six faces for the LED board. Two of them colour each story by its severity.</figcaption>
+    </figure>
+  </section>
+
+  <section>
+    <div class="eyebrow">Before you install it</div>
+    <h2>It arrives empty.</h2>
+    <div class="note">
+      <p><strong>Wire Room ships with no feeds.</strong> It is a reader, not a
+        publisher: you add the RSS or Atom feeds you already follow, which takes about
+        a minute, and nothing is fetched until you do.</p>
+      <p>If you want a news app that arrives full of somebody else&rsquo;s choices,
+        this is not that.</p>
+    </div>
+    <p style="margin-top:1.4rem">There is also an optional markets panel at the end of
+      the board &mdash; gold, Brent, European gas, wheat, the S&amp;P 500 &mdash; which
+      works on first run with no account, or on free API keys of your own if you would
+      rather be on something contractual. The trade-off is written on the control where
+      you choose.</p>
+    <p><a class="cta" href="https://apps.microsoft.com/detail/9p5p0f4mwt2f">Get it free on the Microsoft Store</a></p>
+  </section>
+</div>
+
+<footer>
+  <div class="wrap">
+    Wire Room &middot; <a href="feeds.html">Adding your first feeds</a> &middot;
+    <a href="privacy.html">Privacy</a><br>
+    Stores its settings on your machine. No account, no telemetry, no server of ours
+    for anything to be sent to.
+  </div>
+</footer>
+
+<script>
+(function () {
+  // The app's own drum, in the app's own order. Forwards only.
+  var DRUM = " ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,:-'!?/()&%+";
+  var STEP = 55, STAGGER = 18, CELLS = 26;
+  var MESSAGES = ["WIRE ROOM", "THE WORLD NEWS", "ON ONE LINE", "9.4 MISSILE TEST"];
+
+  var board = document.getElementById("board");
+  if (!board) return;
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  var cells = [], shown = [], target = [], setAt = 0, which = 0;
+  for (var i = 0; i < CELLS; i++) {
+    var el = document.createElement("div");
+    el.className = "cell";
+    el.textContent = " ";
+    board.appendChild(el);
+    cells.push(el);
+    shown.push(0);
+    target.push(0);
+  }
+
+  function centre(text) {
+    text = text.toUpperCase().slice(0, CELLS);
+    var pad = Math.floor((CELLS - text.length) / 2);
+    return (" ".repeat(pad) + text).padEnd(CELLS, " ");
+  }
+
+  function forwards(from, to) {
+    return ((to - from) % DRUM.length + DRUM.length) % DRUM.length;
+  }
+
+  function setMessage(text) {
+    var padded = centre(text);
+    for (var i = 0; i < CELLS; i++) {
+      shown[i] = target[i];
+      var idx = DRUM.indexOf(padded[i]);
+      target[i] = idx < 0 ? 0 : idx;
+    }
+    setAt = performance.now();
+  }
+
+  function settled() {
+    for (var i = 0; i < CELLS; i++) {
+      var elapsed = (performance.now() - setAt) - i * STAGGER;
+      if (elapsed < forwards(shown[i], target[i]) * STEP) return false;
+    }
+    return true;
+  }
+
+  function frame() {
+    var now = performance.now();
+    for (var i = 0; i < CELLS; i++) {
+      var steps = Math.floor(Math.max(0, now - setAt - i * STAGGER) / STEP);
+      var dist = forwards(shown[i], target[i]);
+      var at = (shown[i] + Math.min(steps, dist)) % DRUM.length;
+      var ch = DRUM[at];
+      if (cells[i].textContent !== ch) cells[i].textContent = ch === " " ? " " : ch;
+    }
+    requestAnimationFrame(frame);
+  }
+
+  // Advance only once the board has settled and then rested, so a message is
+  // readable before the next one takes it. Same shape as the app, which waits for
+  // the slowest drum before it starts the dwell.
+  var DWELL = 2200, resting = 0;
+
+  setMessage(MESSAGES[0]);
+  if (reduce) {
+    setAt = -1e9;                                   // arrive settled, never animate
+    setInterval(function () {
+      which = (which + 1) % MESSAGES.length;
+      setMessage(MESSAGES[which]);
+      setAt = -1e9;
+    }, 4500);
+  } else {
+    setInterval(function () {
+      var now = performance.now();
+      if (!settled()) { resting = 0; return; }
+      if (!resting) { resting = now; return; }
+      if (now - resting < DWELL) return;
+      resting = 0;
+      which = (which + 1) % MESSAGES.length;
+      setMessage(MESSAGES[which]);
+    }, 200);
+  }
+
+  requestAnimationFrame(frame);
+})();
+</script>
