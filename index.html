@@ -84,6 +84,31 @@ figure img{display:block;width:100%;max-width:100%;border-radius:5px;
   border:1px solid var(--rule)}
 figcaption{color:var(--dim);font-size:.86rem;margin-top:.5rem}
 
+/* --- feeds ----------------------------------------------------------- */
+/* Name, address, copy. The address is what gets pasted, so it is shown whole and
+   wraps rather than truncating; on a phone it drops below the name. */
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+#feeds{scroll-margin-top:1.4rem}
+.feeds{list-style:none;padding:0;margin:1.2rem 0 1rem;border-top:1px solid var(--rule)}
+.feeds li{display:grid;grid-template-columns:11rem minmax(0,1fr) auto;gap:.4rem 1rem;
+  align-items:center;padding-block:.6rem;border-bottom:1px solid var(--rule)}
+.feeds .fname{font-family:var(--display);font-size:1.02rem;color:var(--ink)}
+.feeds code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  font-size:.82rem;color:var(--dim);overflow-wrap:anywhere;min-width:0}
+.copy{font:500 .8rem/1 var(--body);color:var(--ink);background:transparent;
+  border:1px solid var(--rule);border-radius:4px;padding:.45rem .7rem;cursor:pointer;
+  min-width:4.6rem}
+.copy:hover{border-color:var(--dim)}
+.copy:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.copy.done{color:var(--amber);border-color:var(--amber)}
+.fineprint{color:var(--dim);font-size:.86rem}
+.jump{font-size:.92rem;margin-top:.35rem}
+@media (max-width:560px){
+  .feeds li{grid-template-columns:minmax(0,1fr) auto}
+  .feeds code{grid-column:1 / -1;grid-row:2}
+}
+
 .note{background:var(--panel);border-left:3px solid var(--amber);
   border-radius:0 5px 5px 0;padding:1.1rem 1.2rem}
 .note p:last-child{margin-bottom:0}
@@ -105,6 +130,7 @@ footer a{color:var(--dim)}
       rest go past. On a quiet day the board is quiet.</p>
     <p><a class="cta" href="https://apps.microsoft.com/detail/9p5p0f4mwt2f">Get it free on the Microsoft Store</a></p>
     <p class="meta">Windows 10 and 11 &middot; 40&nbsp;MB &middot; no account, no telemetry</p>
+    <p class="jump"><a href="#feeds">Already installed? Feeds to paste in&nbsp;&darr;</a></p>
   </section>
 
   <section class="screening">
@@ -113,6 +139,35 @@ footer a{color:var(--dim)}
              autoplay muted loop playsinline preload="auto" disablepictureinpicture
              aria-label="Wire Room in motion: the split-flap board riffles from WIRE ROOM to a scored headline, then becomes the LED board"></video>
     </div>
+  </section>
+
+  <section id="feeds">
+    <div class="eyebrow">Your feeds</div>
+    <h2>Some feeds to start with.</h2>
+    <p>Wire Room arrives empty and fetches nothing until you add a source. Right-click the board and choose <strong>Preferences</strong>. Under
+      <strong>Wire Sources</strong>, paste an address, give it a short label and
+      press <strong>Add</strong>.</p>
+    <ul class="feeds">
+      <li><span class="fname">BBC News, world</span><code>https://feeds.bbci.co.uk/<wbr>news/<wbr>world/<wbr>rss.xml</code><button type="button" class="copy" aria-label="Copy the BBC News, world feed address">Copy</button></li>
+      <li><span class="fname">The Guardian, world</span><code>https://www.theguardian.com/<wbr>world/<wbr>rss</code><button type="button" class="copy" aria-label="Copy the The Guardian, world feed address">Copy</button></li>
+      <li><span class="fname">Al Jazeera</span><code>https://www.aljazeera.com/<wbr>xml/<wbr>rss/<wbr>all.xml</code><button type="button" class="copy" aria-label="Copy the Al Jazeera feed address">Copy</button></li>
+      <li><span class="fname">France 24</span><code>https://www.france24.com/<wbr>en/<wbr>rss</code><button type="button" class="copy" aria-label="Copy the France 24 feed address">Copy</button></li>
+      <li><span class="fname">Deutsche Welle</span><code>https://rss.dw.com/<wbr>xml/<wbr>rss-en-world</code><button type="button" class="copy" aria-label="Copy the Deutsche Welle feed address">Copy</button></li>
+      <li><span class="fname">Euronews</span><code>https://www.euronews.com/<wbr>rss</code><button type="button" class="copy" aria-label="Copy the Euronews feed address">Copy</button></li>
+      <li><span class="fname">Sky News, world</span><code>https://feeds.skynews.com/<wbr>feeds/<wbr>rss/<wbr>world.xml</code><button type="button" class="copy" aria-label="Copy the Sky News, world feed address">Copy</button></li>
+      <li><span class="fname">NPR News</span><code>https://feeds.npr.org/<wbr>1001/<wbr>rss.xml</code><button type="button" class="copy" aria-label="Copy the NPR News feed address">Copy</button></li>
+      <li><span class="fname">CNBC, top news</span><code>https://www.cnbc.com/<wbr>id/<wbr>100003114/<wbr>device/<wbr>rss/<wbr>rss.html</code><button type="button" class="copy" aria-label="Copy the CNBC, top news feed address">Copy</button></li>
+      <li><span class="fname">The Economist</span><code>https://www.economist.com/<wbr>latest/<wbr>rss.xml</code><button type="button" class="copy" aria-label="Copy the The Economist feed address">Copy</button></li>
+      <li><span class="fname">Defense News</span><code>https://www.defensenews.com/<wbr>arc/<wbr>outboundfeeds/<wbr>rss/<wbr></code><button type="button" class="copy" aria-label="Copy the Defense News feed address">Copy</button></li>
+      <li><span class="fname">Bellingcat</span><code>https://www.bellingcat.com/<wbr>feed/<wbr></code><button type="button" class="copy" aria-label="Copy the Bellingcat feed address">Copy</button></li>
+    </ul>
+    <p class="fineprint">Every address was checked and returning stories in October 2026.
+      They are listed because they are well known and freely published; Wire Room has no
+      relationship with any of them, and <strong>you are responsible for complying with
+      each publisher&rsquo;s terms of use</strong>. Feeds move &mdash; if one stops working,
+      look it up on the publisher&rsquo;s own site. Two or three you trust make a better
+      board than all twelve. <a href="feeds.html">Finding feeds for other sites, and what
+      to do if nothing appears</a>.</p>
   </section>
 
   <section>
@@ -270,5 +325,27 @@ footer a{color:var(--dim)}
   }
 
   requestAnimationFrame(frame);
+})();
+</script>
+<script>
+(function () {
+  var buttons = document.querySelectorAll(".feeds .copy");
+  for (var i = 0; i < buttons.length; i++) buttons[i].addEventListener("click", copy);
+  function copy() {
+    var b = this, code = b.parentNode.querySelector("code"), url = code.textContent;
+    function say(text, ok) {
+      b.textContent = text; b.classList.toggle("done", ok);
+      clearTimeout(b.t); b.t = setTimeout(function () { b.textContent = "Copy"; b.classList.remove("done"); }, 1800);
+    }
+    function fallback() {
+      var r = document.createRange(); r.selectNodeContents(code);
+      var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
+      var ok = false; try { ok = document.execCommand("copy"); } catch (e) {}
+      say(ok ? "Copied" : "Ctrl+C", ok);
+    }
+    if (navigator.clipboard && window.isSecureContext)
+      navigator.clipboard.writeText(url).then(function () { say("Copied", true); }, fallback);
+    else fallback();
+  }
 })();
 </script>
