@@ -2,7 +2,49 @@
 <html lang="en">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Wire Room</title>
+<title>Wire Room · RSS feed reader for Windows, split-flap or LED</title>
+<meta name="description" content="A free RSS feed reader for Windows 10 and 11 that runs as a ticker along the top of your screen, on a split-flap or LED board. Every headline scored 1–10 for how much it matters.">
+<link rel="canonical" href="https://greendeebie.github.io/wireroom/">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Wire Room">
+<meta property="og:title" content="Wire Room · RSS feed reader for Windows, split-flap or LED">
+<meta property="og:description" content="A free RSS feed reader for Windows 10 and 11 that runs as a ticker along the top of your screen, on a split-flap or LED board. Every headline scored 1–10 for how much it matters.">
+<meta property="og:url" content="https://greendeebie.github.io/wireroom/">
+<meta property="og:image" content="https://greendeebie.github.io/wireroom/og-card.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="A split-flap board reading YOUR NEWS FEEDS ON THE BOARD">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="og:video" content="https://greendeebie.github.io/wireroom/promo.mp4">
+<meta property="og:video:type" content="video/mp4">
+<meta property="og:video:width" content="1920">
+<meta property="og:video:height" content="1080">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "SoftwareApplication",
+ "name": "Wire Room",
+ "url": "https://greendeebie.github.io/wireroom/",
+ "description": "A free RSS feed reader for Windows 10 and 11 that runs as a ticker along the top of your screen, on a split-flap or LED board. Every headline scored 1–10 for how much it matters.",
+ "applicationCategory": "DesktopEnhancementApplication",
+ "operatingSystem": "Windows 10, Windows 11",
+ "downloadUrl": "https://apps.microsoft.com/detail/9p5p0f4mwt2f",
+ "installUrl": "https://apps.microsoft.com/detail/9p5p0f4mwt2f",
+ "image": "https://greendeebie.github.io/wireroom/og-card.png",
+ "screenshot": [
+  "https://greendeebie.github.io/wireroom/01-hero.png",
+  "https://greendeebie.github.io/wireroom/03-in-place.png",
+  "https://greendeebie.github.io/wireroom/06-themes.png"
+ ],
+ "offers": {
+  "@type": "Offer",
+  "price": "0",
+  "priceCurrency": "GBP"
+ }
+}
+</script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -124,11 +166,11 @@ footer a{color:var(--dim)}
 
 <div class="wrap">
   <section style="border-top:none">
-    <h1>A departure board<br>for the news.</h1>
-    <p class="lede">A thin strip along the top of your screen. Every headline scored
-      1&ndash;10 for how much it actually matters, so you can set a floor and let the
+    <h1>A departure board<br>for your RSS feeds.</h1>
+    <p class="lede">A thin strip along the top of your screen that shows the RSS feeds
+      you choose. Every headline scored 1&ndash;10 for how much it actually matters, so you can set a floor and let the
       rest go past. On a quiet day the board is quiet.</p>
-    <p><a class="cta" href="https://apps.microsoft.com/detail/9p5p0f4mwt2f">Get it free on the Microsoft Store</a></p>
+    <p><a class="cta" href="https://apps.microsoft.com/detail/9p5p0f4mwt2f?cid=site-hero">Get it free on the Microsoft Store</a></p>
     <p class="meta">Windows 10 and 11 &middot; 40&nbsp;MB &middot; no account, no telemetry</p>
     <p class="jump"><a href="#feeds">Already installed? Feeds to paste in&nbsp;&darr;</a></p>
   </section>
@@ -143,7 +185,7 @@ footer a{color:var(--dim)}
 
   <section id="feeds">
     <div class="eyebrow">Your feeds</div>
-    <h2>Some feeds to start with.</h2>
+    <h2>Some RSS feeds to start with.</h2>
     <p>Wire Room arrives empty and fetches nothing until you add a source. Right-click the board and choose <strong>Preferences</strong>. Under
       <strong>Wire Sources</strong>, paste an address, give it a short label and
       press <strong>Add</strong>.</p>
@@ -222,7 +264,7 @@ footer a{color:var(--dim)}
       works on first run with no account, or on free API keys of your own if you would
       rather be on something contractual. The trade-off is written on the control where
       you choose.</p>
-    <p><a class="cta" href="https://apps.microsoft.com/detail/9p5p0f4mwt2f">Get it free on the Microsoft Store</a></p>
+    <p><a class="cta" href="https://apps.microsoft.com/detail/9p5p0f4mwt2f?cid=site-bottom">Get it free on the Microsoft Store</a></p>
   </section>
 </div>
 
@@ -346,6 +388,22 @@ footer a{color:var(--dim)}
     if (navigator.clipboard && window.isSecureContext)
       navigator.clipboard.writeText(url).then(function () { say("Copied", true); }, fallback);
     else fallback();
+  }
+})();
+</script>
+<script>
+(function () {
+  // A post links here as ?from=<where>. The Store links then carry that label as
+  // their campaign ID (hn-hero rather than site-hero), and internal links keep it,
+  // so Partner Center can say which post an install came from. Nothing is recorded
+  // here; the label only travels to Microsoft if the visitor clicks through.
+  var from = (new URLSearchParams(location.search).get("from") || "").toLowerCase();
+  if (!/^[a-z0-9-]{1,40}$/.test(from)) return;
+  var links = document.querySelectorAll("a[href]");
+  for (var i = 0; i < links.length; i++) {
+    var a = links[i], h = a.getAttribute("href");
+    if (h.indexOf("apps.microsoft.com") !== -1) a.href = h.replace("cid=site-", "cid=" + from + "-");
+    else if (/^[a-z-]+\.html(#.*)?$/.test(h)) a.href = h.replace(/(\.html)/, "$1?from=" + from);
   }
 })();
 </script>

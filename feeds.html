@@ -2,7 +2,21 @@
 <html lang="en">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Adding your feeds</title>
+<title>World news RSS feeds that still work (October 2026)</title>
+<meta name="description" content="Twelve world news RSS feed addresses - BBC, Guardian, Al Jazeera, NPR, Deutsche Welle and more - each checked and returning stories in October 2026. One click to copy.">
+<link rel="canonical" href="https://greendeebie.github.io/wireroom/feeds.html">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Wire Room">
+<meta property="og:title" content="World news RSS feeds that still work (October 2026)">
+<meta property="og:description" content="Twelve world news RSS feed addresses - BBC, Guardian, Al Jazeera, NPR, Deutsche Welle and more - each checked and returning stories in October 2026. One click to copy.">
+<meta property="og:url" content="https://greendeebie.github.io/wireroom/feeds.html">
+<meta property="og:image" content="https://greendeebie.github.io/wireroom/og-card.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="A split-flap board reading YOUR NEWS FEEDS ON THE BOARD">
+<meta name="twitter:card" content="summary_large_image">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -95,6 +109,33 @@ footer a{color:var(--dim)}
 body{font-size:16px}
 .wrap{max-width:720px}
 h2{margin-top:2.2rem}
+h1{font-size:clamp(2rem,5.5vw,3rem);margin-bottom:1rem}
+.feeds code{background:none;border:0;padding:0;border-radius:0}
+/* --- feeds ----------------------------------------------------------- */
+/* Name, address, copy. The address is what gets pasted, so it is shown whole and
+   wraps rather than truncating; on a phone it drops below the name. */
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+#feeds{scroll-margin-top:1.4rem}
+.feeds{list-style:none;padding:0;margin:1.2rem 0 1rem;border-top:1px solid var(--rule)}
+.feeds li{display:grid;grid-template-columns:11rem minmax(0,1fr) auto;gap:.4rem 1rem;
+  align-items:center;padding-block:.6rem;border-bottom:1px solid var(--rule)}
+.feeds .fname{font-family:var(--display);font-size:1.02rem;color:var(--ink)}
+.feeds code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  font-size:.82rem;color:var(--dim);overflow-wrap:anywhere;min-width:0}
+.copy{font:500 .8rem/1 var(--body);color:var(--ink);background:transparent;
+  border:1px solid var(--rule);border-radius:4px;padding:.45rem .7rem;cursor:pointer;
+  min-width:4.6rem}
+.copy:hover{border-color:var(--dim)}
+.copy:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.copy.done{color:var(--amber);border-color:var(--amber)}
+.fineprint{color:var(--dim);font-size:.86rem}
+.jump{font-size:.92rem;margin-top:.35rem}
+@media (max-width:560px){
+  .feeds li{grid-template-columns:minmax(0,1fr) auto}
+  .feeds code{grid-column:1 / -1;grid-row:2}
+}
+
 ul{max-width:62ch;padding-left:1.1rem}
 li{margin-bottom:.5rem}
 code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em;
@@ -109,12 +150,34 @@ td:first-child{font-family:var(--display);white-space:nowrap;padding-left:0}
 
 <div class="wrap">
 <section style="border-top:none">
-<div class="eyebrow">Getting started</div>
-<h2 style="margin-top:0">Adding your first feeds</h2>
-<p class="lede">Wire Room arrives empty and fetches nothing until you add a source.
-Everything on your board is something you chose.</p>
+<div class="eyebrow">Feeds that work</div>
+<h1>World news RSS feeds that still work</h1>
+<p class="lede">Twelve feed addresses for world news, each checked and returning stories
+in October 2026. Copy one into any feed reader &mdash; or into Wire Room, which puts
+them on a departure board along the top of your screen.</p>
 
-<h2>It takes about twenty seconds</h2>
+    <ul class="feeds">
+  <li><span class="fname">BBC News, world</span><code>https://feeds.bbci.co.uk/<wbr>news/<wbr>world/<wbr>rss.xml</code><button type="button" class="copy" aria-label="Copy the BBC News, world feed address">Copy</button></li>
+  <li><span class="fname">The Guardian, world</span><code>https://www.theguardian.com/<wbr>world/<wbr>rss</code><button type="button" class="copy" aria-label="Copy the The Guardian, world feed address">Copy</button></li>
+  <li><span class="fname">Al Jazeera</span><code>https://www.aljazeera.com/<wbr>xml/<wbr>rss/<wbr>all.xml</code><button type="button" class="copy" aria-label="Copy the Al Jazeera feed address">Copy</button></li>
+  <li><span class="fname">France 24</span><code>https://www.france24.com/<wbr>en/<wbr>rss</code><button type="button" class="copy" aria-label="Copy the France 24 feed address">Copy</button></li>
+  <li><span class="fname">Deutsche Welle</span><code>https://rss.dw.com/<wbr>xml/<wbr>rss-en-world</code><button type="button" class="copy" aria-label="Copy the Deutsche Welle feed address">Copy</button></li>
+  <li><span class="fname">Euronews</span><code>https://www.euronews.com/<wbr>rss</code><button type="button" class="copy" aria-label="Copy the Euronews feed address">Copy</button></li>
+  <li><span class="fname">Sky News, world</span><code>https://feeds.skynews.com/<wbr>feeds/<wbr>rss/<wbr>world.xml</code><button type="button" class="copy" aria-label="Copy the Sky News, world feed address">Copy</button></li>
+  <li><span class="fname">NPR News</span><code>https://feeds.npr.org/<wbr>1001/<wbr>rss.xml</code><button type="button" class="copy" aria-label="Copy the NPR News feed address">Copy</button></li>
+  <li><span class="fname">CNBC, top news</span><code>https://www.cnbc.com/<wbr>id/<wbr>100003114/<wbr>device/<wbr>rss/<wbr>rss.html</code><button type="button" class="copy" aria-label="Copy the CNBC, top news feed address">Copy</button></li>
+  <li><span class="fname">The Economist</span><code>https://www.economist.com/<wbr>latest/<wbr>rss.xml</code><button type="button" class="copy" aria-label="Copy the The Economist feed address">Copy</button></li>
+  <li><span class="fname">Defense News</span><code>https://www.defensenews.com/<wbr>arc/<wbr>outboundfeeds/<wbr>rss/<wbr></code><button type="button" class="copy" aria-label="Copy the Defense News feed address">Copy</button></li>
+  <li><span class="fname">Bellingcat</span><code>https://www.bellingcat.com/<wbr>feed/<wbr></code><button type="button" class="copy" aria-label="Copy the Bellingcat feed address">Copy</button></li>
+</ul>
+<p class="fineprint">They are listed because they are well known and freely published;
+Wire Room has no relationship with any of them, and <strong>you are responsible for
+complying with each publisher&rsquo;s terms of use</strong>. Feeds move &mdash; if one
+stops working, look it up on the publisher&rsquo;s own site.</p>
+
+<h2>Adding one to Wire Room</h2>
+<p>Wire Room arrives empty and fetches nothing until you add a source. It takes about
+twenty seconds:</p>
 <ul>
   <li>Right-click the board and choose <strong>Preferences</strong></li>
   <li>Under <strong>Wire Sources</strong>, paste a feed address into the second box</li>
@@ -122,8 +185,13 @@ Everything on your board is something you chose.</p>
       comes from it</li>
   <li>Press <strong>Add</strong></li>
 </ul>
-<p>Stories from every feed are pooled, scored, and shown in order of severity rather
-than order of arrival.</p>
+<p>Stories from every feed are pooled, scored 1&ndash;10 for how much they matter, and
+shown in order of severity rather than order of arrival. Don&rsquo;t have it yet?
+<a href="https://apps.microsoft.com/detail/9p5p0f4mwt2f?cid=site-feeds">Wire Room is free on the Microsoft Store</a>.</p>
+
+<h2>What happened to the Reuters and AP feeds?</h2>
+<p>Reuters and the Associated Press have both retired their public RSS feeds. Pages
+listing them elsewhere are out of date.</p>
 
 <h2>Finding a feed for a site you read</h2>
 <ul>
@@ -132,29 +200,6 @@ than order of arrival.</p>
   <li>Try adding <code>/rss</code> or <code>/feed</code> to the site's address</li>
   <li>Search for the site's name plus &ldquo;RSS feed&rdquo;</li>
 </ul>
-
-<h2>Some that work</h2>
-<p>Every address below was checked and returning stories when this page was written.
-They are here because they are well known and freely published, not because Wire Room
-has any relationship with any of them. <strong>You are responsible for complying with
-each publisher's terms of use for their feed.</strong> Feeds also move: if one stops
-working, look it up on the publisher's own site.</p>
-<div class="scroll"><table>
-<tr><td>BBC News, world</td><td><code>https://feeds.bbci.co.uk/news/world/rss.xml</code></td></tr>
-<tr><td>The Guardian, world</td><td><code>https://www.theguardian.com/world/rss</code></td></tr>
-<tr><td>Al Jazeera</td><td><code>https://www.aljazeera.com/xml/rss/all.xml</code></td></tr>
-<tr><td>France 24</td><td><code>https://www.france24.com/en/rss</code></td></tr>
-<tr><td>Deutsche Welle</td><td><code>https://rss.dw.com/xml/rss-en-world</code></td></tr>
-<tr><td>Euronews</td><td><code>https://www.euronews.com/rss</code></td></tr>
-<tr><td>Sky News, world</td><td><code>https://feeds.skynews.com/feeds/rss/world.xml</code></td></tr>
-<tr><td>NPR News</td><td><code>https://feeds.npr.org/1001/rss.xml</code></td></tr>
-<tr><td>CNBC, top news</td><td><code>https://www.cnbc.com/id/100003114/device/rss/rss.html</code></td></tr>
-<tr><td>The Economist</td><td><code>https://www.economist.com/latest/rss.xml</code></td></tr>
-<tr><td>Defense News</td><td><code>https://www.defensenews.com/arc/outboundfeeds/rss/</code></td></tr>
-<tr><td>Bellingcat</td><td><code>https://www.bellingcat.com/feed/</code></td></tr>
-</table></div>
-<p>Reuters and the Associated Press have both retired their public RSS feeds. Pages
-listing them elsewhere are out of date.</p>
 
 <h2>Two or three beats ten</h2>
 <p>Ten feeds do not make the board ten times more useful. Most outlets carry the same
@@ -176,3 +221,41 @@ everything.</p>
 </section>
 <a class="back" href="index.html">&larr; Wire Room</a>
 </div>
+<script>
+(function () {
+  var buttons = document.querySelectorAll(".feeds .copy");
+  for (var i = 0; i < buttons.length; i++) buttons[i].addEventListener("click", copy);
+  function copy() {
+    var b = this, code = b.parentNode.querySelector("code"), url = code.textContent;
+    function say(text, ok) {
+      b.textContent = text; b.classList.toggle("done", ok);
+      clearTimeout(b.t); b.t = setTimeout(function () { b.textContent = "Copy"; b.classList.remove("done"); }, 1800);
+    }
+    function fallback() {
+      var r = document.createRange(); r.selectNodeContents(code);
+      var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
+      var ok = false; try { ok = document.execCommand("copy"); } catch (e) {}
+      say(ok ? "Copied" : "Ctrl+C", ok);
+    }
+    if (navigator.clipboard && window.isSecureContext)
+      navigator.clipboard.writeText(url).then(function () { say("Copied", true); }, fallback);
+    else fallback();
+  }
+})();
+</script>
+<script>
+(function () {
+  // A post links here as ?from=<where>. The Store links then carry that label as
+  // their campaign ID (hn-hero rather than site-hero), and internal links keep it,
+  // so Partner Center can say which post an install came from. Nothing is recorded
+  // here; the label only travels to Microsoft if the visitor clicks through.
+  var from = (new URLSearchParams(location.search).get("from") || "").toLowerCase();
+  if (!/^[a-z0-9-]{1,40}$/.test(from)) return;
+  var links = document.querySelectorAll("a[href]");
+  for (var i = 0; i < links.length; i++) {
+    var a = links[i], h = a.getAttribute("href");
+    if (h.indexOf("apps.microsoft.com") !== -1) a.href = h.replace("cid=site-", "cid=" + from + "-");
+    else if (/^[a-z-]+\.html(#.*)?$/.test(h)) a.href = h.replace(/(\.html)/, "$1?from=" + from);
+  }
+})();
+</script>
