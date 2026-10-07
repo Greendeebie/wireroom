@@ -1,3 +1,7 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Wire Room</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -55,16 +59,17 @@ a{color:var(--ink)}
 .cta:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
 .meta{color:var(--dim);font-size:.9rem;margin-top:.8rem}
 
-/* --- the drum -------------------------------------------------------- */
-.drum{font-family:var(--display);font-size:clamp(.85rem,2.2vw,1.15rem);
-  letter-spacing:.22em;background:var(--panel);border:1px solid var(--rule);
-  border-radius:5px;padding:.9rem 1rem;overflow-x:auto;white-space:nowrap;
-  color:var(--dim)}
-.figures{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
-  gap:1.4rem;margin-top:1.6rem}
-.figure .n{font-family:var(--display);font-size:1.9rem;color:var(--ink);
-  font-variant-numeric:tabular-nums}
-.figure .l{color:var(--dim);font-size:.88rem}
+/* --- the screening ---------------------------------------------------- */
+/* The promo in a window: wider than the text column, rounded the way a device
+   screen is, sitting straight under the hero with no rule between them. */
+.screening{border-top:none;padding-top:0}
+.window{position:relative;left:50%;transform:translateX(-50%);
+  width:min(1040px,calc(100vw - 40px));aspect-ratio:16/9;max-width:none;
+  border-radius:clamp(12px,2vw,22px);overflow:hidden;background:#000;
+  box-shadow:0 0 0 1px rgba(255,255,255,.08),
+             0 32px 80px -24px rgba(0,0,0,.9),
+             0 0 140px -40px rgba(112,84,220,.45)}
+.window video{display:block;width:100%;height:100%;object-fit:cover}
 
 /* --- severity -------------------------------------------------------- */
 .scale{display:grid;gap:.5rem;margin-top:1.4rem}
@@ -102,24 +107,11 @@ footer a{color:var(--dim)}
     <p class="meta">Windows 10 and 11 &middot; 40&nbsp;MB &middot; no account, no telemetry</p>
   </section>
 
-  <section>
-    <div class="eyebrow">The mechanism</div>
-    <h2>The drum only turns forwards.</h2>
-    <p>Every character sits on a drum carrying forty-nine positions, in this order:</p>
-    <div class="drum">&nbsp;A B C D E F G H I J K L M N O P Q R S T U V W X Y Z 0 1 2 3 4 5 6 7 8 9 . , : - ' ! ? / ( ) &amp; % +</div>
-    <p style="margin-top:1.2rem">Reaching a letter means stepping through every letter
-      between. Going from <strong>W</strong> to <strong>R</strong> takes forty-four
-      steps, not two backwards &mdash; which is why a board full of text takes about
-      three and a half seconds to settle, and why the change crosses it as a wave.</p>
-    <p>Module proportions, cap height and flap timing were measured off photographs of
-      real boards rather than estimated. Measuring the result back against those
-      references caught a seven per cent overshoot on the lettering and a grain effect
-      nearly three times too strong, both of which had looked right.</p>
-    <div class="figures">
-      <div class="figure"><div class="n">55&thinsp;ms</div><div class="l">one flap turning over</div></div>
-      <div class="figure"><div class="n">18&thinsp;ms</div><div class="l">delay added per cell</div></div>
-      <div class="figure"><div class="n">49</div><div class="l">positions on the drum</div></div>
-      <div class="figure"><div class="n">34&thinsp;px</div><div class="l">screen it occupies</div></div>
+  <section class="screening">
+    <div class="window">
+      <video id="promo" src="promo.mp4" poster="promo-poster.jpg"
+             autoplay muted loop playsinline preload="auto" disablepictureinpicture
+             aria-label="Wire Room in motion: the split-flap board riffles from WIRE ROOM to a scored headline, then becomes the LED board"></video>
     </div>
   </section>
 
@@ -198,6 +190,8 @@ footer a{color:var(--dim)}
   var board = document.getElementById("board");
   if (!board) return;
   var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var promo = document.getElementById("promo");
+  if (promo && reduce) { promo.pause(); promo.removeAttribute("autoplay"); promo.controls = true; }
 
   var cells = [], shown = [], target = [], setAt = 0, which = 0;
   for (var i = 0; i < CELLS; i++) {
